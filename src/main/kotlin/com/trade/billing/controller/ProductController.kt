@@ -1,0 +1,50 @@
+package com.trade.billing.controller
+
+import com.trade.billing.model.Product
+import com.trade.billing.service.ProductService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import java.util.*
+
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
+@RestController
+@RequestMapping("/product")
+class ProductController {
+    @Autowired
+    lateinit var productService: ProductService
+    @GetMapping
+    fun list ():List <Product>{
+        return productService.list()
+    }
+
+    @GetMapping("/{id}")
+    fun listOne (@PathVariable id: Long) : Optional<Product> {
+        return productService.listOne(id)
+    }
+
+    //Peticiones post - Clase controller
+    @PostMapping
+    fun save (@RequestBody modelo: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.save(modelo), HttpStatus.OK)
+    }
+
+    //clase controller - Petición Put
+    @PutMapping
+    fun update (@RequestBody modelo: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.update(modelo), HttpStatus.OK)
+    }
+
+    //clase  controller-Petiicon Patch
+    @PatchMapping
+    fun updateName (@RequestBody modelo: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.update(modelo), HttpStatus.OK)
+    }
+
+    //clase  controller - Petición Delete
+    @DeleteMapping("/delete/{id}")
+    fun delete (@PathVariable("id") id: Long):Boolean?{
+        return productService.delete(id)
+    }
+}
