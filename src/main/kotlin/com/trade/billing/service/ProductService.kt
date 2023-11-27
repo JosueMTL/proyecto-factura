@@ -3,6 +3,10 @@ package com.trade.billing.service
 import com.trade.billing.model.Product
 import com.trade.billing.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Example
+import org.springframework.data.domain.ExampleMatcher
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -11,9 +15,11 @@ import java.util.*
 class ProductService {
     @Autowired
     lateinit var productRepository: ProductRepository
-
-    fun list ():List<Product>{
-        return productRepository.findAll()
+    fun list (pageable: Pageable,product:Product):Page<Product>{
+        val matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withMatcher(("field"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+        return productRepository.findAll(Example.of(product, matcher), pageable)
     }
 
     fun listOne (id: Long): Optional<Product> {

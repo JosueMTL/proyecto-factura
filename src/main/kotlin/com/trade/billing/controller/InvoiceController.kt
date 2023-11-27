@@ -23,6 +23,10 @@ class InvoiceController {
     fun listOne (@PathVariable id: Long) : Optional<Invoice> {
         return invoiceService.listOne(id)
     }
+    @GetMapping("/filter-total/{value}")
+    fun listTotals (@PathVariable("value") value: Double ):ResponseEntity<*>{
+        return ResponseEntity(invoiceService.listByTotal(value), HttpStatus.OK)
+    }
 
     //Peticiones post - Clase controller
     @PostMapping

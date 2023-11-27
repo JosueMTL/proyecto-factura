@@ -20,6 +20,10 @@ class InvoiceService {
         return invoiceRepository.findAll()
     }
 
+    fun listByTotal(value: Double): List<Invoice>{
+        return invoiceRepository.filterTotal(value)
+    }
+
     fun listOne(id: Long): Optional<Invoice> {
         return invoiceRepository.findById(id)
     }

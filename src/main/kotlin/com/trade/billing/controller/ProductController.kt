@@ -3,6 +3,7 @@ package com.trade.billing.controller
 import com.trade.billing.model.Product
 import com.trade.billing.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,9 +16,12 @@ class ProductController {
     @Autowired
     lateinit var productService: ProductService
     @GetMapping
-    fun list ():List <Product>{
-        return productService.list()
+    fun list (product:Product, pageable: Pageable):ResponseEntity<*>{
+        val response= productService.list(pageable,product)
+        return ResponseEntity(response, HttpStatus.OK)
     }
+
+//@RequestParam searchValue:String
 
     @GetMapping("/{id}")
     fun listOne (@PathVariable id: Long) : Optional<Product> {
