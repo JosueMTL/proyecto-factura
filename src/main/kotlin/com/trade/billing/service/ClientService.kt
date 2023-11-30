@@ -19,7 +19,7 @@ class ClientService {
     fun list (pageable: Pageable,client:Client):Page<Client>{
         val matcher = ExampleMatcher.matching()
                 .withIgnoreNullValues()
-                .withMatcher(("field"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher(("fullName"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
         return clientRepository.findAll(Example.of(client, matcher), pageable)
     }
 
