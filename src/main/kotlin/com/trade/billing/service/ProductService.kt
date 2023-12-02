@@ -1,5 +1,7 @@
 package com.trade.billing.service
 
+import com.trade.billing.dto.ProductDto
+import com.trade.billing.mapper.ProductMapper
 import com.trade.billing.model.Product
 import com.trade.billing.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,8 +20,21 @@ class ProductService {
     fun list (pageable: Pageable,product:Product):Page<Product>{
         val matcher = ExampleMatcher.matching()
                 .withIgnoreNullValues()
-                .withMatcher(("field"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher(("fullName"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
         return productRepository.findAll(Example.of(product, matcher), pageable)
+    }
+
+    fun listDto(): List<ProductDto>{
+        val productList= productRepository.findAll()
+        //crear lista mutable
+        val productDtoList= mutableListOf<ProductDto>()
+        //map productList
+        productList.map{product ->
+            val productDto = ProductMapper.mapToDto(product)
+            productDtoList.add(productDto)
+        }
+        return productDtoList
+
     }
 
     fun listOne (id: Long): Optional<Product> {

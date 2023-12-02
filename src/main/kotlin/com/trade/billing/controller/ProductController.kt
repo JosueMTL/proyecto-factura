@@ -21,6 +21,11 @@ class ProductController {
         return ResponseEntity(response, HttpStatus.OK)
     }
 
+    @GetMapping("/list-dto")
+    fun lisDto(): ResponseEntity<*>{
+        return ResponseEntity(productService.listDto(), HttpStatus.OK)
+    }
+
 //@RequestParam searchValue:String
 
     @GetMapping("/{id}")
