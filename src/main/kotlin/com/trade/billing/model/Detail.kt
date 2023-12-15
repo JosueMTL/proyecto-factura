@@ -19,7 +19,7 @@ class Detail {
     var id: Long? = null
 
     @Column(name = "quantity")
-    var quantity: Int? = null
+    var quantity: Int = 0
 
     @Column(name = "price", precision = 10, scale = 2)
     var price: BigDecimal? = null

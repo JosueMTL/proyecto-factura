@@ -40,7 +40,14 @@ class DetailService {
             productRepository.findById(modelo.productId)
                     ?: throw Exception("ID de producto no encontrado")
 
-            return detailRepository.save(modelo)
+            val product= productRepository.findById(modelo.productId)
+            println(product)
+            product?.apply {
+                stock -=modelo.quantity
+            }
+            val response = detailRepository.save(modelo)
+            return response
+
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
@@ -54,21 +61,31 @@ class DetailService {
 
             // Puedes agregar lógica adicional según tus necesidades
 
+            val product = productRepository.findById(modelo.productId)
+            product?.apply {
+                stock += modelo.quantity
+                }
+
             return detailRepository.save(modelo)
         } catch (ex: Exception) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
     }
 
     // clase service - Delete by id
     fun delete(id: Long?): Boolean? {
         try {
-            val response = detailRepository.findById(id)
+            val detail = detailRepository.findById(id)
                     ?: throw Exception("ID no existe")
+
+            val product = productRepository.findById(detail.productId)
+            product?.apply {
+                stock = detail.quantity
+            }
             detailRepository.deleteById(id!!)
             return true
         } catch (ex: Exception) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
     }
 }

@@ -26,5 +26,5 @@ class Product {
     var price: BigDecimal? = null
 
     @Column(name = "stock")
-    var stock: Int? = null
+    var stock: Int = 0
 }
