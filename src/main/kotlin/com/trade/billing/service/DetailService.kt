@@ -31,6 +31,18 @@ class DetailService {
 
     // PETICIONES POST
     fun save(modelo: Detail): Detail {
+        val listDetail= detailRepository.findByInvoiceId(modelo.invoiceId)
+        val invoiceseptup= invoiceRepository.findById(modelo.invoiceId)
+        var sum = (0).toBigDecimal()
+        listDetail.map {
+            sum += (it.price?.times( it.quantity.toBigDecimal())!!)
+        }
+        invoiceseptup?.apply{
+            total= sum
+        }
+        if (invoiceseptup != null) {
+            invoiceRepository.save(invoiceseptup)
+        }
         try {
             // Verifica si la factura asociada existe
             invoiceRepository.findById(modelo.invoiceId)
@@ -55,11 +67,14 @@ class DetailService {
 
     // clase service -Petición put
     fun update(modelo: Detail): Detail {
+        var productToUpdate=productRepository.findById(modelo.productId)
+            ?:throw Exception("Id del Producto no existe")
+        invoiceRepository.findById(modelo.invoiceId)
+            ?:throw Exception("Id del Invoice no existe")
+        var oldQuantity= detailRepository.findById(modelo.id)?.quantity;
         try {
             detailRepository.findById(modelo.id)
                     ?: throw Exception("ID no existe")
-
-            // Puedes agregar lógica adicional según tus necesidades
 
             val product = productRepository.findById(modelo.productId)
             product?.apply {
@@ -74,13 +89,14 @@ class DetailService {
 
     // clase service - Delete by id
     fun delete(id: Long?): Boolean? {
+
         try {
             val detail = detailRepository.findById(id)
                     ?: throw Exception("ID no existe")
 
             val product = productRepository.findById(detail.productId)
             product?.apply {
-                stock = detail.quantity
+                stock += detail.quantity
             }
             detailRepository.deleteById(id!!)
             return true

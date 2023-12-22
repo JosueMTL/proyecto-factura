@@ -23,6 +23,8 @@ class Client {
 
     @Column(name = "address")
     var address: String? = null
+
+    var email: String?= null
 }
 
 
