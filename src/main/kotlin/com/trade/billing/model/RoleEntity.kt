@@ -2,11 +2,11 @@ package com.trade.billing.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Entity
@@ -16,18 +16,10 @@ class RoleEntity {
     @Id
     @Column(updatable = false)
     var id: Long? = null
-
-    var username: String? = null
-
-    @Column(nullable = false, length = 200)
-    var password: String? = null
-
-    @Column(length = 50)
-    var email: String? = null
-
-    @Column(nullable = false)
-    var locked: Boolean? = null
-    var disabled: Boolean? = null
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    var roles: List<RoleEntity>? = null
+    var role: String? = null
+    @Column(name = "user_id")
+    var userId: Long? = null
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable=false, updatable=false)
+    var user:UserEntity? = null
 }
