@@ -36,6 +36,12 @@ class SecurityConfig {
                     .hasAnyRole("sales")
                     .requestMatchers(HttpMethod.GET,"/client/**")
                     .hasAnyRole("sales")
+                    .requestMatchers(HttpMethod.POST,"/invoice/**")
+                    .hasAnyRole("sales")
+                    .requestMatchers(HttpMethod.GET,"/invoice/**")
+                    .hasAnyRole("admin")
+                    .requestMatchers(HttpMethod.POST,"/invoice/**")
+                    .hasAnyRole("admin")
                     .anyRequest().denyAll()
 
             }

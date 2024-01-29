@@ -29,20 +29,20 @@ class ClientController {
 
     //Peticiones post - Clase controller
     @PostMapping
-    fun save (@RequestBody modelo: Client): ResponseEntity<Client> {
-        return ResponseEntity(clientService.save(modelo), HttpStatus.OK)
+    fun save (@RequestBody client: Client): ResponseEntity<Client> {
+        return ResponseEntity(clientService.save(client), HttpStatus.OK)
     }
 
     //clase controller - Petición Put
     @PutMapping
-    fun update (@RequestBody modelo: Client): ResponseEntity<Client> {
-        return ResponseEntity(clientService.update(modelo), HttpStatus.OK)
+    fun update (@RequestBody client: Client): ResponseEntity<Client> {
+        return ResponseEntity(clientService.update(client), HttpStatus.OK)
     }
 
     //clase  controller-Petiicon Patch
     @PatchMapping
-    fun updateName (@RequestBody modelo: Client): ResponseEntity<Client> {
-        return ResponseEntity(clientService.update(modelo), HttpStatus.OK)
+    fun updateName (@RequestBody client: Client): ResponseEntity<Client> {
+        return ResponseEntity(clientService.update(client), HttpStatus.OK)
     }
 
     //clase  controller - Petición Delete

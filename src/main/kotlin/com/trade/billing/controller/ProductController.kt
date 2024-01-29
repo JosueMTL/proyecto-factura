@@ -35,20 +35,20 @@ class ProductController {
 
     //Peticiones post - Clase controller
     @PostMapping
-    fun save (@RequestBody modelo: Product): ResponseEntity<Product> {
-        return ResponseEntity(productService.save(modelo), HttpStatus.OK)
+    fun save (@RequestBody product: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.save(product), HttpStatus.OK)
     }
 
     //clase controller - Petición Put
     @PutMapping
-    fun update (@RequestBody modelo: Product): ResponseEntity<Product> {
-        return ResponseEntity(productService.update(modelo), HttpStatus.OK)
+    fun update (@RequestBody product: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.update(product), HttpStatus.OK)
     }
 
     //clase  controller-Petiicon Patch
     @PatchMapping
-    fun updateName (@RequestBody modelo: Product): ResponseEntity<Product> {
-        return ResponseEntity(productService.update(modelo), HttpStatus.OK)
+    fun updateName (@RequestBody product: Product): ResponseEntity<Product> {
+        return ResponseEntity(productService.update(product), HttpStatus.OK)
     }
 
     //clase  controller - Petición Delete

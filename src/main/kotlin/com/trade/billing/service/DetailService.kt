@@ -30,9 +30,9 @@ class DetailService {
     }
 
     // PETICIONES POST
-    fun save(modelo: Detail): Detail {
-        val listDetail= detailRepository.findByInvoiceId(modelo.invoiceId)
-        val invoiceseptup= invoiceRepository.findById(modelo.invoiceId)
+    fun save(detail: Detail): Detail {
+        val listDetail= detailRepository.findByInvoiceId(detail.invoiceId)
+        val invoiceseptup= invoiceRepository.findById(detail.invoiceId)
         var sum = (0).toBigDecimal()
         listDetail.map {
             sum += (it.price?.times( it.quantity.toBigDecimal())!!)
@@ -45,19 +45,19 @@ class DetailService {
         }
         try {
             // Verifica si la factura asociada existe
-            invoiceRepository.findById(modelo.invoiceId)
+            invoiceRepository.findById(detail.invoiceId)
                     ?: throw Exception("ID de factura no encontrado")
 
             // Verifica si el producto asociado existe
-            productRepository.findById(modelo.productId)
+            productRepository.findById(detail.productId)
                     ?: throw Exception("ID de producto no encontrado")
 
-            val product= productRepository.findById(modelo.productId)
+            val product= productRepository.findById(detail.productId)
             println(product)
             product?.apply {
-                stock -=modelo.quantity
+                stock -=detail.quantity
             }
-            val response = detailRepository.save(modelo)
+            val response = detailRepository.save(detail)
             return response
 
         } catch (ex: Exception) {
@@ -66,22 +66,22 @@ class DetailService {
     }
 
     // clase service -Petición put
-    fun update(modelo: Detail): Detail {
-        var productToUpdate=productRepository.findById(modelo.productId)
+    fun update(detail: Detail): Detail {
+        var productToUpdate=productRepository.findById(detail.productId)
             ?:throw Exception("Id del Producto no existe")
-        invoiceRepository.findById(modelo.invoiceId)
+        invoiceRepository.findById(detail.invoiceId)
             ?:throw Exception("Id del Invoice no existe")
-        var oldQuantity= detailRepository.findById(modelo.id)?.quantity;
+        var oldQuantity= detailRepository.findById(detail.id)?.quantity;
         try {
-            detailRepository.findById(modelo.id)
+            detailRepository.findById(detail.id)
                     ?: throw Exception("ID no existe")
 
-            val product = productRepository.findById(modelo.productId)
+            val product = productRepository.findById(detail.productId)
             product?.apply {
-                stock += modelo.quantity
+                stock += detail.quantity
                 }
 
-            return detailRepository.save(modelo)
+            return detailRepository.save(detail)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }

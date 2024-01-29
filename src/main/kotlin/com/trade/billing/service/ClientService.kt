@@ -29,9 +29,11 @@ class ClientService {
 
     //PETICIONES POST
     //clase service
-    fun save(modelo: Client): Client{
+    fun save(client: Client): Client{
         try{
-            return clientRepository.save(modelo)
+            client.fullName?.takeIf { it.trim().isNotEmpty() }
+                ?:  throw  Exception("Nombres no deben ser nulos")
+            return clientRepository.save(client)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)

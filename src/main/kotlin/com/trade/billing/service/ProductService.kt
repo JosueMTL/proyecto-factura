@@ -43,21 +43,21 @@ class ProductService {
 
     //PETICIONES POST
     //clase service
-    fun save(modelo: Product): Product{
+    fun save(product: Product): Product{
         try{
-            return productRepository.save(modelo)
+            return productRepository.save(product)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
     //clase service -Petición put
-    fun update(modelo: Product): Product{
+    fun update(product: Product): Product{
         try {
-            productRepository.findById(modelo.id)
+            productRepository.findById(product.id)
                     ?: throw Exception("ID no existe")
 
-            return productRepository.save(modelo)
+            return productRepository.save(product)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)

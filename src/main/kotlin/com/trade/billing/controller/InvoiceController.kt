@@ -30,20 +30,20 @@ class InvoiceController {
 
     //Peticiones post - Clase controller
     @PostMapping
-    fun save (@RequestBody modelo: Invoice): ResponseEntity<Invoice> {
-        return ResponseEntity(invoiceService.save(modelo), HttpStatus.OK)
+    fun save (@RequestBody invoice: Invoice): ResponseEntity<Invoice> {
+        return ResponseEntity(invoiceService.save(invoice), HttpStatus.OK)
     }
 
     //clase controller - Petición Put
     @PutMapping
-    fun update (@RequestBody modelo: Invoice): ResponseEntity<Invoice> {
-        return ResponseEntity(invoiceService.update(modelo), HttpStatus.OK)
+    fun update (@RequestBody invoice: Invoice): ResponseEntity<Invoice> {
+        return ResponseEntity(invoiceService.update(invoice), HttpStatus.OK)
     }
 
     //clase  controller-Petiicon Patch
     @PatchMapping
-    fun updateName (@RequestBody modelo: Invoice): ResponseEntity<Invoice> {
-        return ResponseEntity(invoiceService.update(modelo), HttpStatus.OK)
+    fun updateName (@RequestBody invoice: Invoice): ResponseEntity<Invoice> {
+        return ResponseEntity(invoiceService.update(invoice), HttpStatus.OK)
     }
 
     //clase  controller - Petición Delete

@@ -29,11 +29,11 @@ class InvoiceService {
     }
 
     // PETICIONES POST
-    fun save(modelo: Invoice): Invoice {
+    fun save(invoice: Invoice): Invoice {
         try {
-            clientRepository.findById(modelo.clientId) // Usar "modelo.authorId" en lugar de "modelo.clientId"
+            clientRepository.findById(invoice.clientId) // Usar "modelo.authorId" en lugar de "modelo.clientId"
                     ?: throw Exception("Id del autor no encontrado")
-            return invoiceRepository.save(modelo)
+            return invoiceRepository.save(invoice)
         } catch (ex: Exception) {
             throw ResponseStatusException(
                     HttpStatus.NOT_FOUND, ex.message)
@@ -41,12 +41,12 @@ class InvoiceService {
     }
 
     // clase service -Petición put
-    fun update(modelo: Invoice): Invoice {
+    fun update(invoice: Invoice): Invoice {
         try {
-            invoiceRepository.findById(modelo.id)
+            invoiceRepository.findById(invoice.id)
                     ?: throw Exception("ID no existe")
 
-            return invoiceRepository.save(modelo)
+            return invoiceRepository.save(invoice)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
