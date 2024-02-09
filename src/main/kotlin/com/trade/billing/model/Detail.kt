@@ -27,14 +27,6 @@ class Detail {
     @Column(name = "invoice_id")
     var invoiceId: Long? = null
 
-    @ManyToOne
-    @JoinColumn(name = "invoice_id", insertable = false, updatable = false)
-    var invoice: Invoice? = null
-
     @Column(name = "product_id")
     var productId: Long? = null
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    var product: Product? = null
 }
